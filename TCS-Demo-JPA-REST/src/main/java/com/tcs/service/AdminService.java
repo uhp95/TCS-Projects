@@ -5,6 +5,7 @@ package com.tcs.service;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.core.MediaType;
@@ -22,10 +23,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tcs.entity.Course;
 import com.tcs.entity.Grades;
 import com.tcs.entity.Professor;
+import com.tcs.entity.UserManagement;
 import com.tcs.repository.AdminApprovalRepository;
 import com.tcs.repository.CourseRepository;
 import com.tcs.repository.GradeRepository;
 import com.tcs.repository.ProfessorRepository;
+import com.tcs.repository.UserManagementRepository;
 
 
 
@@ -48,6 +51,9 @@ public class AdminService {
 	@Autowired
 	AdminApprovalRepository adminApprovalEntity;
 	
+	@Autowired
+	UserManagementRepository userEntity;
+	
 	private static List<Course> courseEntityList;
 	{
 		courseEntityList = new ArrayList<Course>();
@@ -63,6 +69,10 @@ public class AdminService {
 	private static Grades gradeEntityClass;
 	{
 		gradeEntityClass = new Grades();
+	}
+	private static UserManagement userManagementEntityClass;
+	{
+		userManagementEntityClass = new UserManagement();
 	}
 	
 	/**
@@ -109,7 +119,13 @@ public class AdminService {
 	@Transactional
 	public Professor addProfessor(Professor addProfessor)
 	{
+		Date date = new Date();
 		professorEntityClass = professorEntity.save(addProfessor);
+		userManagementEntityClass.setRoleid(2);
+		userManagementEntityClass.setStatus("In Active");
+		userManagementEntityClass.setUserid(addProfessor.getId());
+		userManagementEntityClass.setLogintime(date);
+		userEntity.save(userManagementEntityClass);
 		return professorEntityClass;
 	}
 	
