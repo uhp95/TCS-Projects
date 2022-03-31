@@ -33,6 +33,31 @@ public class StudentGrades {
 	
 	@Column(name = "sem")
 	private String sem;
+	
+	@Column(name = "courseid")
+	private int courseid;
+	
+	public StudentGrades(long id, long studentid, long professorid, long gradeid, String sem, int courseid) {
+		super();
+		this.id = id;
+		this.studentid = studentid;
+		this.professorid = professorid;
+		this.gradeid = gradeid;
+		this.sem = sem;
+		this.courseid = courseid;
+	}
+	/**
+	 * @return the courseid
+	 */
+	public int getCourseid() {
+		return courseid;
+	}
+	/**
+	 * @param courseid the courseid to set
+	 */
+	public void setCourseid(int courseid) {
+		this.courseid = courseid;
+	}
 	/**
 	 * @return the id
 	 */
@@ -91,14 +116,6 @@ public class StudentGrades {
 	 * @param sem the sem to set
 	 */
 	public void setSem(String sem) {
-		this.sem = sem;
-	}
-	public StudentGrades(long id, long studentid, long professorid, long gradeid, String sem) {
-		super();
-		this.id = id;
-		this.studentid = studentid;
-		this.professorid = professorid;
-		this.gradeid = gradeid;
 		this.sem = sem;
 	}
 	

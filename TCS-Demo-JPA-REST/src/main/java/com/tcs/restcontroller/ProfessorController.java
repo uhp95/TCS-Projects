@@ -3,6 +3,9 @@
  */
 package com.tcs.restcontroller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.core.MediaType;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,10 @@ public class ProfessorController {
 	{
 		studentGradeEntityClass = new StudentGrades();
 	}
+	private static List<Student> studentEntityList;
+	{
+		studentEntityList = new ArrayList<Student>();
+	}
 	
 	/**
 	 * Add Grades to students.
@@ -53,6 +60,26 @@ public class ProfessorController {
 		else
 		{
 		return new ResponseEntity<String>("Details added successfully",HttpStatus.OK);
+		}
+	}
+	
+	/**
+	 * Fetch Students assigned to courses.
+	 * @Param course name
+	 * @Throws
+	 */
+	@RequestMapping(value = "/getStudentsForTheCourse/{id}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON)
+	@ResponseBody
+	public ResponseEntity<List<Student>> getStudentsAssignedToCourse(@PathVariable("id") int courseid){
+	
+		studentEntityList =professorOperation.getStudentsAssignedToCourse(courseid);
+		if(studentEntityList.equals(null))
+		{
+			return new ResponseEntity<List<Student>>(HttpStatus.NOT_FOUND);
+		}
+		else
+		{
+		return new ResponseEntity<List<Student>>(studentEntityList,HttpStatus.OK);
 		}
 	}
 

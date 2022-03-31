@@ -3,6 +3,10 @@
  */
 package com.tcs.repository;
 
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.tcs.entity.Course;
@@ -13,5 +17,12 @@ import com.tcs.entity.Course;
  */
 public interface CourseRepository extends CrudRepository<Course, Integer>{
 
+	@Modifying
+	@Query(value ="select professorid from professorcourses where courseid= ?", nativeQuery = true)
+	public List<Long> getProfessorById(int courseid);
+	
+	@Query(value ="select name from courses where id= ?", nativeQuery = true)
+	public String getCourseName(int course);
+	
 
 }
